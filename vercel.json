@@ -1,0 +1,10 @@
+{
+  "framework": "create-react-app",
+  "installCommand": "npm --prefix frontend install",
+  "buildCommand": "npm --prefix frontend run build",
+  "outputDirectory": "frontend/build",
+  "env": {
+    "REACT_APP_API_URL": "https://your-render-backend.onrender.com"
+  }
+}
+
