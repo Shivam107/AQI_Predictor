@@ -2,10 +2,9 @@ services:
   - type: web
     name: live-sensor-backend
     env: node
-    rootDir: backend
     plan: free
-    buildCommand: npm install
-    startCommand: node index.js
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node index.js
     autoDeploy: true
     envVars:
       - key: MONGODB_URI
