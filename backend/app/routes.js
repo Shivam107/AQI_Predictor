@@ -29,6 +29,45 @@ router.post('/sensor-data', async (req, res) => {
   }
 });
 
+// GET /sensor-data/latest - returns the most recent sensor reading
+router.get('/sensor-data/latest', async (req, res) => {
+  try {
+    let latestReading = null;
+    
+    // Try MongoDB first if connected
+    if (mongoose.connection.readyState === 1) {
+      latestReading = await SensorReading.findOne()
+        .sort({ timestamp: -1 })
+        .limit(1);
+    }
+    
+    // Fallback to in-memory if no DB reading
+    if (!latestReading && liveSensorData.length > 0) {
+      const latest = liveSensorData[liveSensorData.length - 1];
+      latestReading = {
+        timestamp: latest.timestamp,
+        sensor_id: latest.sensor_id,
+        values: latest.values,
+        location: latest.location
+      };
+    }
+    
+    if (latestReading) {
+      res.json({ 
+        success: true, 
+        data: latestReading 
+      });
+    } else {
+      res.json({ 
+        success: false, 
+        message: 'No sensor data available' 
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // GET /merged-data
 router.get('/merged-data', async (req, res) => {
   try {

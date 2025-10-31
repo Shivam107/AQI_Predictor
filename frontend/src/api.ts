@@ -11,6 +11,16 @@ export async function uploadSensorData(sensorPayload: any) {
   return response.json();
 }
 
+export async function getLatestSensorData() {
+  try {
+    const response = await fetch(`${API_BASE}/api/sensor-data/latest`);
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    return { success: false, error: err };
+  }
+}
+
 export async function getMergedData() {
   const response = await fetch(`${API_BASE}/api/merged-data`);
   return response.json();
