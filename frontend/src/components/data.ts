@@ -40,8 +40,8 @@ export function naiveForecast(history: AqiPoint[], horizon = 6): AqiPoint[] {
 }
 
 // Replace with backend sensor fetch (future DB/Atlas integration)
-export async function fetchLiveMergedHistory() {
-  return await getMergedData();
+export async function fetchLiveMergedHistory(city?: string) {
+  return await getMergedData(city);
 }
 
 // Fetch real sensor data with fallback to simulated data

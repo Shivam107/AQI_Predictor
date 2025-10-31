@@ -29,9 +29,12 @@ export async function getLatestSensorData() {
   }
 }
 
-export async function getMergedData() {
+export async function getMergedData(city?: string) {
   try {
-    const response = await fetch(`${API_BASE}/api/merged-data`);
+    const url = city && city !== 'All Cities' 
+      ? `${API_BASE}/api/merged-data?city=${encodeURIComponent(city)}`
+      : `${API_BASE}/api/merged-data`;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -40,6 +43,20 @@ export async function getMergedData() {
     console.error('Error fetching merged data:', err);
     // Return empty array as fallback
     return [];
+  }
+}
+
+export async function getCities() {
+  try {
+    const response = await fetch(`${API_BASE}/api/cities`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const data = await response.json();
+    return data.cities || [];
+  } catch (err) {
+    console.error('Error fetching cities:', err);
+    return ['All Cities'];
   }
 }
 

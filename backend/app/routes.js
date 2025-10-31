@@ -73,11 +73,32 @@ router.get('/sensor-data/latest', async (req, res) => {
   }
 });
 
-// GET /merged-data
+// GET /merged-data (with optional city filter)
 router.get('/merged-data', async (req, res) => {
   try {
-    const merged = await mergeSensorWithHistory(liveSensorData);
+    let merged = await mergeSensorWithHistory(liveSensorData);
+    
+    // Filter by city if provided
+    const city = req.query.city;
+    if (city && city !== 'All Cities') {
+      merged = merged.filter(record => 
+        record.City && record.City.toLowerCase() === city.toLowerCase()
+      );
+    }
+    
     res.json(merged);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /cities - Get list of available cities
+router.get('/cities', async (req, res) => {
+  try {
+    const merged = await mergeSensorWithHistory(liveSensorData);
+    const cities = [...new Set(merged.map(record => record.City).filter(Boolean))];
+    cities.sort();
+    res.json({ cities: ['All Cities', ...cities] });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

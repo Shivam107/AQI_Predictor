@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Mail, Bell } from 'lucide-react';
+import CitySelector from './CitySelector';
 
 interface HeaderProps {
   onOpenMessages: () => void;
@@ -30,6 +31,11 @@ const Header: React.FC<HeaderProps> = ({
               ⌘ F
             </kbd>
           </div>
+        </div>
+
+        {/* City Selector */}
+        <div className="ml-6">
+          <CitySelector />
         </div>
 
         {/* Right Side - Icons and Profile */}

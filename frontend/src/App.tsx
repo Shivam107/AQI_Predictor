@@ -2,6 +2,7 @@ import React from 'react';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { CityProvider } from './contexts/CityContext';
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -23,9 +24,11 @@ const AppContent: React.FC = () => {
 function App() {
   return (
     <AuthProvider>
-      <div className="App">
-        <AppContent />
-      </div>
+      <CityProvider>
+        <div className="App">
+          <AppContent />
+        </div>
+      </CityProvider>
     </AuthProvider>
   );
 }
