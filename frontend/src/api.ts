@@ -3,12 +3,20 @@
 const API_BASE = (process.env.REACT_APP_API_URL || 'http://localhost:3001').replace(/\/$/, '');
 
 export async function uploadSensorData(sensorPayload: any) {
-  const response = await fetch(`${API_BASE}/api/sensor-data`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(sensorPayload),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE}/api/sensor-data`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(sensorPayload),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
+  } catch (err) {
+    console.error('Error uploading sensor data:', err);
+    return { success: false, error: err };
+  }
 }
 
 export async function getLatestSensorData() {
@@ -22,13 +30,30 @@ export async function getLatestSensorData() {
 }
 
 export async function getMergedData() {
-  const response = await fetch(`${API_BASE}/api/merged-data`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE}/api/merged-data`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
+  } catch (err) {
+    console.error('Error fetching merged data:', err);
+    // Return empty array as fallback
+    return [];
+  }
 }
 
 export async function getAqiPrediction(month: number) {
-  const response = await fetch(`${API_BASE}/api/predict-aqi/?month=${month}`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE}/api/predict-aqi/?month=${month}`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    return response.json();
+  } catch (err) {
+    console.error('Error fetching AQI prediction:', err);
+    return { predicted_aqi: null };
+  }
 }
 
 export async function getMitigationAdvice(aqi: number) {
@@ -46,5 +71,15 @@ export async function getMitigationAdvice(aqi: number) {
       Warnings: ['Backend unavailable or network error.'],
       Actions: ['Retry later', 'Check server at REACT_APP_API_URL or :3001'],
     };
+  }
+}
+
+export async function getSensorPollingStatus() {
+  try {
+    const response = await fetch(`${API_BASE}/api/sensor-polling/status`);
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    return { success: false, error: err };
   }
 }

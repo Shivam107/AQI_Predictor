@@ -1,0 +1,39 @@
+{
+  "name": "iot-aqi-dashboard",
+  "version": "1.0.0",
+  "description": "IoT Air Quality Dashboard with real-time monitoring and predictions",
+  "private": true,
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "clean": "rm -rf backend/node_modules frontend/node_modules frontend/build",
+    "deploy:build": "cd frontend && npm run build && echo 'Build complete! Check DEPLOYMENT_READY.md for deployment instructions.'"
+  },
+  "keywords": [
+    "iot",
+    "air-quality",
+    "aqi",
+    "dashboard",
+    "react",
+    "nodejs",
+    "express",
+    "mongodb"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/iot-aqi-dashboard"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
+

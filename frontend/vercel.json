@@ -2,8 +2,30 @@
   "installCommand": "npm install",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
+  "devCommand": "npm run dev",
   "env": {
-    "REACT_APP_API_URL": "https://your-render-backend.onrender.com"
-  }
+    "REACT_APP_API_URL": {
+      "description": "Backend API URL",
+      "value": "https://your-backend.onrender.com"
+    }
+  },
+  "regions": ["iad1"],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }
 

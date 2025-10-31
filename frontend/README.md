@@ -1,15 +1,15 @@
-# Donezo Dashboard
+# Air Apex Dashboard
 
-A modern, responsive project management dashboard built with React, TypeScript, and TailwindCSS.
+A modern, responsive IoT Air Quality Monitoring dashboard built with React, TypeScript, and TailwindCSS.
 
 ## Features
 
-- **Dashboard Overview**: View all project metrics at a glance
-- **Project Analytics**: Visual charts showing project progress over time
-- **Team Collaboration**: Track team members and their current tasks
-- **Time Tracker**: Built-in time tracking functionality
-- **Reminders**: Meeting and task reminders
-- **Project Management**: View and manage all projects in one place
+- **Real-time AQI Monitoring**: Live air quality data from IoT sensors
+- **Analytics Dashboard**: Visual charts showing AQI trends and statistics
+- **Calendar View**: AQI data displayed by date
+- **Team Collaboration**: Track team members working on air quality projects
+- **Settings & Alerts**: Custom AQI thresholds and notification preferences
+- **Help & Support**: Comprehensive FAQs and documentation
 
 ## Tech Stack
 
@@ -42,17 +42,18 @@ npm run build
 
 ## Components
 
-- `Dashboard`: Main dashboard layout
+- `Dashboard`: Main IoT air quality dashboard layout
 - `Sidebar`: Navigation sidebar
-- `Header`: Top header with search and user profile
-- `MetricCards`: Project metrics display
-- `ProjectAnalytics`: Analytics chart
-- `TeamCollaboration`: Team member overview
-- `ProjectList`: List of active projects
-- `Reminders`: Meeting reminders
-- `ProjectProgress`: Circular progress chart
-- `TimeTracker`: Time tracking widget
-- `MobileAppDownload`: Mobile app promotion
+- `Header`: Top header with user profile
+- `SensorCards`: Real-time sensor data display
+- `AQISection`: Current AQI status and predictions
+- `PredictionChart`: AQI forecast chart
+- `Analytics`: Comprehensive AQI statistics
+- `CalendarView`: AQI calendar by date
+- `Team`: Team member management
+- `Settings`: User preferences and alert configuration
+- `Help`: Support and FAQ section
+- `Login`: Authentication with Google OAuth
 
 ## Design
 

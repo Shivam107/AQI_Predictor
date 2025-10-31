@@ -4,8 +4,13 @@ const { SensorData, SensorReading } = require('./models');
 const { mergeSensorWithHistory, predictAqiForMonth, getMitigationMeasures } = require('./utils');
 const router = express.Router();
 
-// In-memory store for live sensor data submissions
+// In-memory store for live sensor data submissions (shared with polling service)
 const liveSensorData = [];
+
+// Export function to get reference to liveSensorData array
+function getLiveSensorDataRef() {
+  return liveSensorData;
+}
 
 // POST /sensor-data
 router.post('/sensor-data', async (req, res) => {
@@ -95,4 +100,27 @@ router.get('/mitigation-advice', (req, res) => {
   res.json(getMitigationMeasures(aqi));
 });
 
+// GET /sensor-polling/status - Get status of the sensor polling service
+router.get('/sensor-polling/status', (req, res) => {
+  try {
+    const pollingService = req.app.locals.sensorPollingService;
+    
+    if (!pollingService) {
+      return res.json({
+        success: false,
+        message: 'Sensor polling service not initialized'
+      });
+    }
+    
+    const status = pollingService.getStatus();
+    res.json({
+      success: true,
+      ...status
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;
+module.exports.getLiveSensorDataRef = getLiveSensorDataRef;

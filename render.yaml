@@ -1,14 +1,24 @@
 services:
   - type: web
-    name: live-sensor-backend
+    name: aqi-backend
     env: node
+    runtime: node
     plan: free
-    buildCommand: cd backend && npm install
+    buildCommand: cd backend && npm install --production
     startCommand: cd backend && node index.js
     autoDeploy: true
+    healthCheckPath: /
     envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3001
       - key: MONGODB_URI
         sync: false
       - key: FRONTEND_URL
         sync: false
+      - key: SENSOR_ENDPOINT
+        value: https://aqi-predictor-krb8.onrender.com/api/sensor-data
+      - key: POLL_INTERVAL
+        value: 10000
 
